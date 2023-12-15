@@ -10,6 +10,13 @@ import java.util.Scanner;
 
 public class GUI {
     private static final Scanner scanner = new Scanner(System.in);
+    public static String showLoginOrRegistrationReadChoose() {
+        System.out.println("1. Login");
+        System.out.println("2. Registration");
+        System.out.println("3. Exit");
+        return scanner.nextLine();
+    }
+
 
     public static String showMenuAndReadChoose() {
         System.out.println("1. List cars");

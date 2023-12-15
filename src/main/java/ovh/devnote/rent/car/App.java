@@ -10,6 +10,7 @@ public class App {
         final VehicleRepository baza = new VehicleRepository();
         final Authenticator authenticator = new Authenticator();
         boolean run = false;
+
         for(int i = 0; i < 3; i++) {
             User user = GUI.readLoginData();
             boolean authResult = authenticator.authenticate(user.getLogin(), user.getPassword());

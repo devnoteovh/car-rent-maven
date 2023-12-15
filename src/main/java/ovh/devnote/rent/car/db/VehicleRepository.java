@@ -14,11 +14,13 @@ public class VehicleRepository {
 
     public VehicleRepository() {
         try(BufferedReader reader =
-                    new BufferedReader(new FileReader(Constants.VEHICLES_FILE))) {
+                    new BufferedReader(new FileReader(Constants.DATABASE_FILE))) {
             String lineFromFile;
             while((lineFromFile = reader.readLine()) != null) {
                 String[] vehicleParts = lineFromFile.split(";");
                 Vehicle vehicle = null;
+                if (vehicleParts[0].equals("User"))
+                    continue;
                 switch(vehicleParts[0]) {
                     case "Car":
                         vehicle = new Car(
@@ -110,7 +112,7 @@ public class VehicleRepository {
 
     public void save() {
         try(BufferedWriter writer =
-                    new BufferedWriter(new FileWriter(Constants.VEHICLES_FILE))) {
+                    new BufferedWriter(new FileWriter(Constants.DATABASE_FILE))) {
             boolean first = true;
             for(Vehicle vehicle : this.vehicles.values()) {
                 if(!first) {

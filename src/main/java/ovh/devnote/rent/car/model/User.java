@@ -45,6 +45,8 @@ public class User {
 
     public String convertToCSVString() {
         return new StringBuilder()
+                .append(this.getClass().getSimpleName())
+                .append(";")
                 .append(this.login)
                 .append(";")
                 .append(this.password)

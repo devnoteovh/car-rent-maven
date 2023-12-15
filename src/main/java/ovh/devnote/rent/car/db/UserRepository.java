@@ -11,11 +11,13 @@ public class UserRepository {
 
     public UserRepository() {
         try(BufferedReader reader =
-                    new BufferedReader(new FileReader(Constants.USERS_FILE))) {
+                    new BufferedReader(new FileReader(Constants.DATABASE_FILE))) {
             String lineFromFile;
             while((lineFromFile = reader.readLine()) != null) {
                 String[] userParts = lineFromFile.split(";");
-                User user = new User(userParts[0], userParts[1], userParts[2]);
+                if (!userParts[0].equals("User"))
+                    continue;
+                User user = new User(userParts[1], userParts[2], userParts[3]);
                 this.users.put(user.getLogin(), user);
             }
         } catch (FileNotFoundException e) {
@@ -31,7 +33,7 @@ public class UserRepository {
 
     public void save() {
         try(BufferedWriter writer =
-                    new BufferedWriter(new FileWriter(Constants.USERS_FILE))) {
+                    new BufferedWriter(new FileWriter(Constants.DATABASE_FILE))) {
             boolean first = true;
             for(User user : this.users.values()) {
                 if(!first) {
