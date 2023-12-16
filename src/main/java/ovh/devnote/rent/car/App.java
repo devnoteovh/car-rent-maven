@@ -69,8 +69,7 @@ public class App {
                         userToChange.setRole("ADMIN");
                         changebool = true;
                     }
-                        GUI.showResult(changebool);
-                        run = false;
+                    GUI.showResult(changebool);
                     break;
                 case "0":
                     run = false;
