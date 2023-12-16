@@ -64,10 +64,11 @@ public class App {
                 case "9":
                     GUI.printUsers(ubase.getUsers());
                     User userToChange = ubase.findByLogin(GUI.readLogin());
-                    //userToChange.setRole(GUI.readRole());
-                    userToChange.setRole("ADMIN");
-//                    if (userToChange.getLogin().equals(Authenticator.loggedUserLogin))
-//                        GUI.printUserRoleWarning();
+                    if(userToChange != null) {
+                        userToChange.setRole("ADMIN");
+                        GUI.showResult(true);
+                    }
+
                         run = false;
                     break;
                 case "0":
