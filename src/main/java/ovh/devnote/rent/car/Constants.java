@@ -1,5 +1,5 @@
 package ovh.devnote.rent.car;
 
 public interface Constants {
-    String DATABASE_FILE = "./database.txt";
+    String DATABASE_FILE = "./db.txt";
 }

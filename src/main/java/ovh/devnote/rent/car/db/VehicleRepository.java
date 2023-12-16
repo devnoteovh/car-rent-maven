@@ -112,7 +112,7 @@ public class VehicleRepository {
 
     public void save() {
         try(BufferedWriter writer =
-                    new BufferedWriter(new FileWriter(Constants.DATABASE_FILE))) {
+                    new BufferedWriter(new FileWriter(Constants.DATABASE_FILE,true))) {
             boolean first = true;
             for(Vehicle vehicle : this.vehicles.values()) {
                 if(!first) {

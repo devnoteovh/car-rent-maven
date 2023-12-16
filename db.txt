@@ -1,0 +1,4 @@
+User;mateusz;d7df75a7310ab5cefaabd61266c7b028;USER
+User;lukasz;8fc8621dadc36547f092cf01ced484d4;USER
+User;admin;d7df75a7310ab5cefaabd61266c7b028;ADMIN
+Car;Audi;A5;2000;1.0;asdf;false

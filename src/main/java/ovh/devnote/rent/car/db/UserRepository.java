@@ -31,6 +31,15 @@ public class UserRepository {
         return this.users.get(login);
     }
 
+    public void addUser(User user){
+        this.users.put(user.getLogin(),user);
+
+    }
+
+    public HashMap<String, User> getUsers() {
+        return users;
+    }
+
     public void save() {
         try(BufferedWriter writer =
                     new BufferedWriter(new FileWriter(Constants.DATABASE_FILE))) {
@@ -42,6 +51,7 @@ public class UserRepository {
                 first = false;
                 writer.write(user.convertToCSVString());
             }
+            writer.write("\n");
         } catch (IOException e) {
             System.out.println("Users file writing error !");
         }

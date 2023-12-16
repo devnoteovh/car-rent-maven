@@ -1,18 +1,46 @@
 package ovh.devnote.rent.car;
 
 import ovh.devnote.rent.car.authenticate.Authenticator;
+import ovh.devnote.rent.car.db.Saver;
+import ovh.devnote.rent.car.db.UserRepository;
 import ovh.devnote.rent.car.db.VehicleRepository;
 import ovh.devnote.rent.car.gui.GUI;
 import ovh.devnote.rent.car.model.User;
 
 public class App {
     public static void main(String[] args) {
-        final VehicleRepository baza = new VehicleRepository();
-        final Authenticator authenticator = new Authenticator();
-        boolean run = false;
-
+        final VehicleRepository vbase = new VehicleRepository();
+        final UserRepository ubase = new UserRepository();
+        final Authenticator authenticator = new Authenticator(ubase);
+        boolean run = true;
+        while(run){
+            switch (GUI.showLoginOrRegistrationReadChoose()){
+                case "1":
+                    run = false;
+                    break;
+                case "2":
+                    User user = GUI.readUserData();
+                    boolean registered=false;
+                    if (ubase.findByLogin(user.getLogin()) == null){
+                        user.setPassword(authenticator.hashing(user.getPassword()));
+                        user.setRole("USER");
+                        ubase.addUser(user);
+                        registered = true;
+                    }
+                    GUI.showResult(registered);
+                    break;
+                case "0":
+                    run = false;
+                    Saver.saveData(ubase,vbase);
+                    System.exit(0);
+                default:
+                    GUI.showWrongChoose();
+                    break;
+            }
+        }
+        run = false;
         for(int i = 0; i < 3; i++) {
-            User user = GUI.readLoginData();
+            User user = GUI.readUserData();
             boolean authResult = authenticator.authenticate(user.getLogin(), user.getPassword());
             if(authResult) {
                 System.out.println("Logged !!");
@@ -24,23 +52,31 @@ public class App {
         while(run) {
             switch(GUI.showMenuAndReadChoose()) {
                 case "1":
-                    GUI.printVehicles(baza.getVehicles());
+                    GUI.printVehicles(vbase.getVehicles());
                     break;
                 case "2":
-                    GUI.showResult(baza.rentVehicle(GUI.readPlate()));
+                    GUI.showResult(vbase.rentVehicle(GUI.readPlate()));
                     break;
                 case "3":
-                    GUI.showResult(baza.returnVehicle(GUI.readPlate()));
+                    GUI.showResult(vbase.returnVehicle(GUI.readPlate()));
                     break;
-                case "4":
+
+                case "9":
+                    GUI.printUsers(ubase.getUsers());
+                    User userToChange = ubase.findByLogin(GUI.readLogin());
+                    userToChange.setRole(GUI.readRole());
+                    if (userToChange.getLogin().equals(Authenticator.loggedUserLogin))
+                        GUI.printUserRoleWarning();
+                        run = false;
+                    break;
+                case "0":
                     run = false;
-                    authenticator.getUserRepository().save();
-                    baza.save();
                     break;
                 default:
                     GUI.showWrongChoose();
                     break;
             }
         }
+        Saver.saveData(ubase,vbase);
     }
 }
