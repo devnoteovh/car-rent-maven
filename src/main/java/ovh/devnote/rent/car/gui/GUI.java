@@ -26,7 +26,7 @@ public class GUI {
         System.out.println("2. Rent car");
         System.out.println("3. Return car");
         if("ADMIN".equals(Authenticator.loggedUserRole)) {
-            System.out.println("9. Change role");
+            System.out.println("9. Change role to admin");
         }
 
         System.out.println("0. Exit");
